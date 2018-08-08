@@ -1,0 +1,3 @@
+include ':app'
+include ':FaRecyclerView'
+project(':FaRecyclerView').projectDir = new File('D:\\Jitpackio\\FaRecyclerview\\library')
