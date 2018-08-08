@@ -16,8 +16,7 @@ import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 import com.vn.fa.adapter.infinite.InfiniteAdapter;
 import com.vn.fa.adapter.multipleviewtype.IViewBinder;
-import com.vn.fa.adapter.multipleviewtype.VegaBindAdapter;
-import com.vn.fa.widget.RecyclerViewWrapper;
+import com.vn.fa.widget.FaRecyclerView;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ import java.util.ArrayList;
  */
 public abstract class FaBaseMultipleViewActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, SwipeDismissRecyclerViewTouchListener.DismissCallbacks {
 
-    private RecyclerViewWrapper mRecycler;
+    private FaRecyclerView mRecycler;
     private InfiniteAdapter mAdapter;
     private SparseItemRemoveAnimator mSparseAnimator;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -40,7 +39,7 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         ArrayList<String> list = new ArrayList<>();
         mAdapter = new InfiniteAdapter();
 
-        mRecycler = (RecyclerViewWrapper) findViewById(R.id.list);
+        mRecycler = (FaRecyclerView) findViewById(R.id.list);
         //mLayoutManager = getLayoutManager();
         //mRecycler.setLayoutManager(mLayoutManager);
         if (getLayoutManager() != null)
@@ -100,7 +99,7 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         mAdapter.setOnLoadMoreListener(new InfiniteAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (pageCount <5) {
+                if (pageCount <10) {
                     mHandler.postDelayed(new Runnable() {
                         public void run() {
                             ArrayList<IViewBinder> list = new ArrayList<IViewBinder>();
@@ -110,7 +109,7 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
                             list.add(new TextItem());
                             mAdapter.addAllDataObject(list);
                         }
-                    }, 300);
+                    }, 1000);
                     pageCount ++;
                 }else{
                     mAdapter.setShouldLoadMore(false);
@@ -127,6 +126,9 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
 
     @Override
     public void onRefresh() {
+        pageCount =0;
+        mAdapter.setShouldLoadMore(true);
+
         Toast.makeText(this, "Refresh", Toast.LENGTH_LONG).show();
         mRecycler.supportLoadMore(true);
         mHandler.postDelayed(new Runnable() {

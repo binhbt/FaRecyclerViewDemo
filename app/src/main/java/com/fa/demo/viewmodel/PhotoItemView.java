@@ -1,18 +1,17 @@
 package com.fa.demo.viewmodel;
 
 import android.view.View;
-import android.widget.ImageView;
 
 import com.fa.demo.R;
 import com.fa.demo.model.PhotoItem;
 import com.vn.fa.adapter.multipleviewtype.BinderViewHolder;
-import com.vn.fa.adapter.multipleviewtype.VegaDataBinder;
+import com.vn.fa.adapter.multipleviewtype.FaDataBinder;
 
 
 /**
  * Created by binhbt on 7/22/2016.
  */
-public class PhotoItemView extends VegaDataBinder<PhotoItem> {
+public class PhotoItemView extends FaDataBinder<PhotoItem> {
     public PhotoItemView(PhotoItem data){
         super(data);
     }

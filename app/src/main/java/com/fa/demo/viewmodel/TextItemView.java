@@ -5,12 +5,12 @@ import android.view.View;
 import com.fa.demo.R;
 import com.fa.demo.model.TextItem;
 import com.vn.fa.adapter.multipleviewtype.BinderViewHolder;
-import com.vn.fa.adapter.multipleviewtype.VegaDataBinder;
+import com.vn.fa.adapter.multipleviewtype.FaDataBinder;
 
 /**
  * Created by binhbt on 7/22/2016.
  */
-public class TextItemView extends VegaDataBinder<TextItem> {
+public class TextItemView extends FaDataBinder<TextItem> {
     public TextItemView(TextItem data){
         super(data);
     }
