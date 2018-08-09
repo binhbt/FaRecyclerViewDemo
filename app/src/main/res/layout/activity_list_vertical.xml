@@ -5,7 +5,7 @@
     <com.vn.fa.widget.FaRecyclerView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/list"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         app:fa_orientation="vertical"
         app:fa_type="list"
         android:layout_centerHorizontal="true"

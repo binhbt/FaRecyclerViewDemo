@@ -1,6 +1,7 @@
 package com.fa.demo.viewmodel;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.fa.demo.R;
 import com.fa.demo.model.TextItem;
@@ -16,8 +17,8 @@ public class TextItemView extends FaDataBinder<TextItem> {
     }
     @Override
     public void bindViewHolder(BinderViewHolder holder, int position) {
-//        TextViewHolder holder1 = (TextViewHolder)holder;
-//        holder1.mTxt.setText(data.getText());
+        TextViewHolder holder1 = (TextViewHolder)holder;
+        holder1.mTxt.setText(data.getText());
     }
 
     @Override
@@ -31,10 +32,10 @@ public class TextItemView extends FaDataBinder<TextItem> {
     }
 
     static class TextViewHolder extends BinderViewHolder {
-//        @Bind(R.id.text)
-//        TextView mTxt;
+        TextView mTxt;
         public TextViewHolder(View view) {
             super(view);
+            mTxt = view.findViewById(R.id.text);
         }
     }
 }
