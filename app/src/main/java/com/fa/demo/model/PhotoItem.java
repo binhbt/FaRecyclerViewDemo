@@ -9,7 +9,7 @@ import com.vn.fa.adapter.multipleviewtype.IViewBinder;
  * Created by binhbt on 7/22/2016.
  */
 public class PhotoItem implements IViewBinder {
-    private String url = "http://i.funny.pho.to/templates/red_boost/preview220.jpg";
+    private String url = "https://thumb1.shutterstock.com/display_pic_with_logo/298234/128696450/stock-photo-two-pink-flowers-128696450.jpg";
 
     public String getUrl() {
         return url;

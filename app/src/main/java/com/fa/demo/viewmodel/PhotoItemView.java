@@ -1,9 +1,11 @@
 package com.fa.demo.viewmodel;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.fa.demo.R;
 import com.fa.demo.model.PhotoItem;
+import com.squareup.picasso.Picasso;
 import com.vn.fa.adapter.multipleviewtype.BinderViewHolder;
 import com.vn.fa.adapter.multipleviewtype.FaDataBinder;
 
@@ -18,9 +20,9 @@ public class PhotoItemView extends FaDataBinder<PhotoItem> {
     @Override
     public void bindViewHolder(BinderViewHolder holder, int position) {
         PhotoViewHolder holder1 = (PhotoViewHolder)holder;
-//        Picasso.with(holder1.mImageView.getContext())
-//                .load(data.getUrl())
-//                .into(holder1.mImageView);
+        Picasso.get()
+                .load(data.getUrl())
+                .into(holder1.mImageView);
 
     }
 
@@ -35,10 +37,10 @@ public class PhotoItemView extends FaDataBinder<PhotoItem> {
     }
 
     static class PhotoViewHolder extends BinderViewHolder {
-//        @Bind(R.id.photo)
-//        ImageView mImageView;
+        ImageView mImageView;
         public PhotoViewHolder(View view) {
             super(view);
+            mImageView = view.findViewById(R.id.photo);
         }
     }
 }
