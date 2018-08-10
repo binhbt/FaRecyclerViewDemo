@@ -23,12 +23,10 @@ import java.util.ArrayList;
 /**
  * Created by binhbt on 7/22/2016.
  */
-public abstract class FaBaseMultipleViewActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, SwipeDismissRecyclerViewTouchListener.DismissCallbacks {
+public abstract class FaBaseMultipleViewActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
 
     private FaRecyclerView mRecycler;
     private InfiniteAdapter mAdapter;
-    private SparseItemRemoveAnimator mSparseAnimator;
-    private RecyclerView.LayoutManager mLayoutManager;
     private Handler mHandler;
     private int pageCount =0;
     @Override
@@ -40,18 +38,9 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         mAdapter = new InfiniteAdapter();
 
         mRecycler = (FaRecyclerView) findViewById(R.id.list);
-        //mLayoutManager = getLayoutManager();
-        //mRecycler.setLayoutManager(mLayoutManager);
         if (getLayoutManager() != null)
             mRecycler.setLayoutManager(getLayoutManager());
         mRecycler.addItemDecoration(new PaddingItemDecoration());
-
-        boolean dismissEnabled = isSwipeToDismissEnabled();
-        if (dismissEnabled) {
-            mRecycler.setupSwipeToDismiss(this);
-            mSparseAnimator = new SparseItemRemoveAnimator();
-            mRecycler.setItemAnimator(mSparseAnimator);
-        }
 
         mHandler = new Handler(Looper.getMainLooper());
 
@@ -81,7 +70,6 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //mAdapter.addAll(new String[]{"More stuff", "More stuff", "More stuff", "More stuff", "More stuff", "More stuff", "More stuff", "More stuff", "More stuff"});
                         mAdapter.addBinder(new PhotoItem().getViewBinder());
                         mAdapter.addBinder(new TextItem().getViewBinder());
                         mAdapter.notifyDataSetChanged();
@@ -120,7 +108,6 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
 
     protected abstract int getLayoutId();
 
-    protected abstract boolean isSwipeToDismissEnabled();
 
     protected abstract RecyclerView.LayoutManager getLayoutManager();
 
@@ -128,7 +115,6 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
     public void onRefresh() {
         pageCount =0;
         mAdapter.setShouldLoadMore(true);
-
         Toast.makeText(this, "Refresh", Toast.LENGTH_LONG).show();
         mRecycler.supportLoadMore(true);
         mHandler.postDelayed(new Runnable() {
@@ -140,36 +126,4 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         pageCount =0;
     }
 
-    @Override
-    public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
-        Toast.makeText(this, "More "+pageCount, Toast.LENGTH_LONG).show();
-        if (pageCount <20) {
-            mHandler.postDelayed(new Runnable() {
-                public void run() {
-                    ArrayList<IViewBinder> list = new ArrayList<IViewBinder>();
-                    list.add(new PhotoItem());
-                    list.add(new TextItem());
-                    list.add(new PhotoItem());
-                    list.add(new TextItem());
-                    mAdapter.addAllDataObject(list);
-                }
-            }, 300);
-            pageCount ++;
-        }else{
-            mRecycler.endData();
-        }
-    }
-
-    @Override
-    public boolean canDismiss(int position) {
-        return isSwipeToDismissEnabled();
-    }
-
-    @Override
-    public void onDismiss(RecyclerView recyclerView, int[] reverseSortedPositions) {
-        for (int position : reverseSortedPositions) {
-//            mSparseAnimator.setSkipNext(true);
-//            mAdapter.remove(position);
-        }
-    }
 }
