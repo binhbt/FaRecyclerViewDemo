@@ -22,8 +22,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:23.3.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    //implementation 'com.github.binhbt:FaRecyclerView:1.2.7'
-    compile project(':FaRecyclerView')
+    implementation 'com.github.binhbt:FaRecyclerView:1.2.8'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'com.android.support:cardview-v7:23.3.0'
