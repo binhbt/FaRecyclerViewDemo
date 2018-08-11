@@ -1,7 +1,7 @@
 package com.fa.demo.model;
 
 
-import com.fa.demo.viewmodel.PhotoItemView;
+import com.fa.demo.holder.PhotoItemView;
 import com.vn.fa.adapter.multipleviewtype.DataBinder;
 import com.vn.fa.adapter.multipleviewtype.IViewBinder;
 

@@ -1,6 +1,6 @@
 package com.fa.demo.model;
 
-import com.fa.demo.viewmodel.TextItemView;
+import com.fa.demo.holder.TextItemView;
 import com.vn.fa.adapter.multipleviewtype.DataBinder;
 import com.vn.fa.adapter.multipleviewtype.IViewBinder;
 

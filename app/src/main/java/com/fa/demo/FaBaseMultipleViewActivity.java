@@ -11,9 +11,6 @@ import android.widget.Toast;
 
 import com.fa.demo.model.PhotoItem;
 import com.fa.demo.model.TextItem;
-import com.malinskiy.superrecyclerview.OnMoreListener;
-import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
-import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
 import com.vn.fa.adapter.FaAdapter;
 import com.vn.fa.adapter.infinite.InfiniteAdapter;
 import com.vn.fa.adapter.multipleviewtype.IViewBinder;
@@ -24,12 +21,10 @@ import java.util.ArrayList;
 /**
  * Created by binhbt on 7/22/2016.
  */
-public abstract class FaBaseMultipleViewActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, SwipeDismissRecyclerViewTouchListener.DismissCallbacks {
+public abstract class FaBaseMultipleViewActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener{
 
     private FaRecyclerView mRecycler;
     private FaAdapter mAdapter;
-    private SparseItemRemoveAnimator mSparseAnimator;
-    private RecyclerView.LayoutManager mLayoutManager;
     private Handler mHandler;
     private int pageCount =0;
     @Override
@@ -46,13 +41,6 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         if (getLayoutManager() != null)
             mRecycler.setLayoutManager(getLayoutManager());
         mRecycler.addItemDecoration(new PaddingItemDecoration());
-
-        boolean dismissEnabled = isSwipeToDismissEnabled();
-        if (dismissEnabled) {
-            mRecycler.setupSwipeToDismiss(this);
-            mSparseAnimator = new SparseItemRemoveAnimator();
-            mRecycler.setItemAnimator(mSparseAnimator);
-        }
 
         mHandler = new Handler(Looper.getMainLooper());
 
@@ -94,14 +82,8 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         });
         thread.start();
 
-        mRecycler.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
+        mRecycler.setRefreshListener(this);
         mRecycler.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        //mRecycler.setupMoreListener(this);
         mAdapter.setOnLoadMoreListener(new InfiniteAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -126,8 +108,6 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
 
     protected abstract int getLayoutId();
 
-    protected abstract boolean isSwipeToDismissEnabled();
-
     protected abstract RecyclerView.LayoutManager getLayoutManager();
 
     @Override
@@ -136,7 +116,6 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         mAdapter.setShouldLoadMore(true);
 
         Toast.makeText(this, "Refresh", Toast.LENGTH_LONG).show();
-        mRecycler.supportLoadMore(true);
         mHandler.postDelayed(new Runnable() {
             public void run() {
                 mAdapter.addDataObject(new PhotoItem());
@@ -146,36 +125,4 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         pageCount =0;
     }
 
-    @Override
-    public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
-        Toast.makeText(this, "More "+pageCount, Toast.LENGTH_LONG).show();
-        if (pageCount <20) {
-            mHandler.postDelayed(new Runnable() {
-                public void run() {
-                    ArrayList<IViewBinder> list = new ArrayList<IViewBinder>();
-                    list.add(new PhotoItem());
-                    list.add(new TextItem());
-                    list.add(new PhotoItem());
-                    list.add(new TextItem());
-                    mAdapter.addAllDataObject(list);
-                }
-            }, 300);
-            pageCount ++;
-        }else{
-            mRecycler.endData();
-        }
-    }
-
-    @Override
-    public boolean canDismiss(int position) {
-        return isSwipeToDismissEnabled();
-    }
-
-    @Override
-    public void onDismiss(RecyclerView recyclerView, int[] reverseSortedPositions) {
-        for (int position : reverseSortedPositions) {
-//            mSparseAnimator.setSkipNext(true);
-//            mAdapter.remove(position);
-        }
-    }
 }

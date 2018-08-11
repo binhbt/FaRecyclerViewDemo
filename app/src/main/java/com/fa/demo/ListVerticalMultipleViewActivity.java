@@ -12,11 +12,6 @@ public class ListVerticalMultipleViewActivity extends FaBaseMultipleViewActivity
     }
 
     @Override
-    protected boolean isSwipeToDismissEnabled() {
-        return false;
-    }
-
-    @Override
     protected LinearLayoutManager getLayoutManager() {
         return null;
     }

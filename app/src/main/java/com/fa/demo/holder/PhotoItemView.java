@@ -1,7 +1,8 @@
-package com.fa.demo.viewmodel;
+package com.fa.demo.holder;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.fa.demo.R;
 import com.fa.demo.model.PhotoItem;
@@ -23,7 +24,7 @@ public class PhotoItemView extends FaDataBinder<PhotoItem> {
         Picasso.get()
                 .load(data.getUrl())
                 .into(holder1.mImageView);
-
+        holder1.txtTitle.setText("Photo "+ position);
     }
 
     @Override
@@ -38,9 +39,11 @@ public class PhotoItemView extends FaDataBinder<PhotoItem> {
 
     static class PhotoViewHolder extends BinderViewHolder {
         ImageView mImageView;
+        TextView txtTitle;
         public PhotoViewHolder(View view) {
             super(view);
             mImageView = view.findViewById(R.id.photo);
+            txtTitle = view.findViewById(R.id.txt_title);
         }
     }
 }
