@@ -14,6 +14,7 @@ import com.fa.demo.model.TextItem;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.swipe.SparseItemRemoveAnimator;
 import com.malinskiy.superrecyclerview.swipe.SwipeDismissRecyclerViewTouchListener;
+import com.vn.fa.adapter.FaAdapter;
 import com.vn.fa.adapter.infinite.InfiniteAdapter;
 import com.vn.fa.adapter.multipleviewtype.IViewBinder;
 import com.vn.fa.widget.FaRecyclerView;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 public abstract class FaBaseMultipleViewActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, SwipeDismissRecyclerViewTouchListener.DismissCallbacks {
 
     private FaRecyclerView mRecycler;
-    private InfiniteAdapter mAdapter;
+    private FaAdapter mAdapter;
     private SparseItemRemoveAnimator mSparseAnimator;
     private RecyclerView.LayoutManager mLayoutManager;
     private Handler mHandler;
@@ -37,7 +38,7 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         setContentView(getLayoutId());
 
         ArrayList<String> list = new ArrayList<>();
-        mAdapter = new InfiniteAdapter();
+        mAdapter = new FaAdapter();
 
         mRecycler = (FaRecyclerView) findViewById(R.id.list);
         //mLayoutManager = getLayoutManager();
