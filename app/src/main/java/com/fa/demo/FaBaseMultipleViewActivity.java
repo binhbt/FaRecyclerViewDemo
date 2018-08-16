@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 public abstract class FaBaseMultipleViewActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener{
 
-    private FaRecyclerView mRecycler;
+    protected FaRecyclerView mRecycler;
     private FaAdapter mAdapter;
     private Handler mHandler;
     private int pageCount =0;
@@ -41,6 +41,7 @@ public abstract class FaBaseMultipleViewActivity extends Activity implements Swi
         if (getLayoutManager() != null)
             mRecycler.setLayoutManager(getLayoutManager());
         mRecycler.addItemDecoration(new PaddingItemDecoration());
+
 
         mHandler = new Handler(Looper.getMainLooper());
 
